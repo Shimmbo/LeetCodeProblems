@@ -1,16 +1,24 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="d-flex">
+    <SideBar/>
+    <div id="page-content-wrapper">
+      <Header/>
+      <HelloWorld msg="Welcome to Your Vue.js App"/>
+    </div>
   </div>
 </template>
 
 <script>
+
+import SideBar from './components/SideBar.vue'
+import Header from './components/Header.vue'
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
+    SideBar,
+    Header,
     HelloWorld
   }
 }
@@ -43,7 +51,7 @@ body {
   min-width: 100vw;
 }
 
-#wrapper.toggled #sidebar-wrapper {
+#app.toggled #sidebar-wrapper {
   margin-left: 0;
 }
 
@@ -57,7 +65,7 @@ body {
     width: 100%;
   }
 
-  #wrapper.toggled #sidebar-wrapper {
+  #app.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
 }

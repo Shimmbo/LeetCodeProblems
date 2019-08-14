@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+const $ = require('jquery')
+// Lo declaramos globalmente
+window.$ = $
 
 Vue.config.productionTip = false
 
