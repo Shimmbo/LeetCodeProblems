@@ -1,9 +1,9 @@
 <template>
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Start Bootstrap </div>
+        <div class="sidebar-heading">LeetCode Problems</div>
         <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light" @click="SetProblem('BinarySearch')">Binary Search</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light" @click="SetProblem('Test')">Shortcuts</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
@@ -14,6 +14,11 @@
 
 <script>
 export default {
-  name: 'SideBar'
+  name: 'SideBar',
+  methods: {
+      SetProblem(name){
+          this.$emit('SetProblem', name);
+      }
+  }
 }
 </script>

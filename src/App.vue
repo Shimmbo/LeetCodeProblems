@@ -1,25 +1,36 @@
 <template>
   <div id="app" class="d-flex">
-    <SideBar/>
+    <SideBar @SetProblem="SetProblem"/>
     <div id="page-content-wrapper">
       <Header/>
-      <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <component :is="CurrentTab">
+
+      </component>
     </div>
   </div>
 </template>
 
 <script>
-
 import SideBar from './components/SideBar.vue'
 import Header from './components/Header.vue'
-import HelloWorld from './components/HelloWorld.vue'
+import BinarySearch from './components/BinarySearch.vue'
 
 export default {
   name: 'app',
   components: {
     SideBar,
     Header,
-    HelloWorld
+    BinarySearch
+  },
+  data(){
+    return {
+      CurrentTab: 'BinarySearch'
+    }
+  },
+  methods: {
+    SetProblem(name) {
+      this.CurrentTab = name;
+    }
   }
 }
 </script>
