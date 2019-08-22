@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="d-flex">
-    <SideBar @SetProblem="SetProblem"/>
+    <SideBar :Tab="CurrentTab" @SetTab="SetTabAlgorithm"/>
     <div id="page-content-wrapper">
       <Header/>
-      <component :is="CurrentTab">
+      <component :is="CurrentTab" :Tab="CurrentTab" :CurrentAlgorithm="CurrentAlgorithm">
 
       </component>
     </div>
@@ -24,12 +24,14 @@ export default {
   },
   data(){
     return {
-      CurrentTab: 'BinarySearch'
+      CurrentTab: 'BinarySearch',
+      CurrentAlgorithm: 'BinarySearch'
     }
   },
   methods: {
-    SetProblem(name) {
+    SetTabAlgorithm(tab, algorithm) {
       this.CurrentTab = name;
+      this.CurrentAlgorithm = algorithm;
     }
   }
 }

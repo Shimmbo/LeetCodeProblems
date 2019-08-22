@@ -9,7 +9,7 @@ const go = require('gojs')
 var $ = go.GraphObject.make;
 
 export default {
-    name: 'ArrayDiagram',
+	name: 'ArrayDiagram',
     props: ['modelData'],
     mounted: function() {
         var self = this;
