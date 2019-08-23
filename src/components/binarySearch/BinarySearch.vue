@@ -1,17 +1,37 @@
 <template>
     <div class="container-fluid" >
-		<input v-model="Input"/>
-		<input v-model="Target"/>
+		<component :is="CurrentAlgorithm"></component>
+		<div class="form-row">
+			<div class="col-3">
+				<label>Input</label>
+			</div>
+			<div class="col-3">
+				<label>Target</label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-3">
+				<input  type="text" class="form-control" v-model="Input"/>
+			</div>
+			<div class="col-3">
+				<input  type="text" class="form-control" v-model="Target"/>
+			</div>
+			<div class="col-3">
+				<button type="button" class="btn btn-primary" @click="GetResult()">Get</button>
+			</div>
+		</div>
        	<label>Result is {{Output}}</label>
        	<br/>
-       	<button @click="Find()">Find</button>
+      
        	<br/>
        	<ArrayDiagram ref="diag" v-bind:model-data="diagramData" style="border: solid 1px black; width:100%; height:400px"></ArrayDiagram>
     </div>
 </template>
 
 <script>
-import ArrayDiagram from './ArrayDiagram.vue'
+import ArrayDiagram from '../ArrayDiagram.vue'
+import FindTarget from '../binarySearch/FindTarget.vue'
+
 export default {
 	name: 'BinarySearch',
 	props: ['Tab', 'CurrentAlgorithm'],
@@ -22,12 +42,13 @@ export default {
 		window.EventBus.$on('UpdateDiagram', this.updateDiagramFromData)
 	},
 	components: {
-		ArrayDiagram: ArrayDiagram
+		ArrayDiagram: ArrayDiagram,
+		FindTarget: FindTarget
 	},
 	data() {
 		return {
 			Output: '',
-			Input: '',
+			Input: '-1,0,3,5,9,12',
 		}
 	},
 	methods: {
@@ -63,7 +84,7 @@ export default {
 			});
 			this.diagramData.nodeDataArray.sort(function(a,b ){ return a.key - b.key;});
 		},
-		Find() {
+		GetResult() {
 			this.ClearDiagram();
 			this.MapInput();
 			setTimeout(() => {

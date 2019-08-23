@@ -2,7 +2,7 @@
   <div id="app" class="d-flex">
     <SideBar :Tab="CurrentTab" @SetTab="SetTabAlgorithm"/>
     <div id="page-content-wrapper">
-      <Header/>
+      <Header :Title="CurrentName"/>
       <component :is="CurrentTab" :Tab="CurrentTab" :CurrentAlgorithm="CurrentAlgorithm">
 
       </component>
@@ -13,7 +13,7 @@
 <script>
 import SideBar from './components/SideBar.vue'
 import Header from './components/Header.vue'
-import BinarySearch from './components/BinarySearch.vue'
+import BinarySearch from './components/binarySearch/BinarySearch.vue'
 
 export default {
   name: 'app',
@@ -25,13 +25,15 @@ export default {
   data(){
     return {
       CurrentTab: 'BinarySearch',
-      CurrentAlgorithm: 'BinarySearch'
+      CurrentAlgorithm: 'FindTarget',
+      CurrentName: 'Binary Search'
     }
   },
   methods: {
     SetTabAlgorithm(tab, algorithm) {
       this.CurrentTab = name;
       this.CurrentAlgorithm = algorithm;
+      this.CurrentName = name;
     }
   }
 }

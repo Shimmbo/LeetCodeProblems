@@ -26,7 +26,7 @@ export default {
 				window.EventBus.$emit('UpdateDiagram', i);
 			}, time * 1000);
 		},
-		BinarySearch() {
+		FindTarget() {
 			var time = 1;
 			var index = parseInt(this.diagramData.nodeDataArray.length / 2);
 			var middle = this.diagramData.nodeDataArray[index].key;
@@ -42,7 +42,7 @@ export default {
 				this.ChangeColor(this.diagramData.nodeDataArray[i].key, time++);
 				if (this.diagramData.nodeDataArray[i].key == this.Target) {
 					return i;
-				};
+				}
 			}
 			return "Not found";	
 		}

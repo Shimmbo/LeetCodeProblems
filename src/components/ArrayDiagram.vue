@@ -1,5 +1,5 @@
 <template>
-
+    
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
         $(go.Diagram, this.$el,
             {
             layout: $(go.TreeLayout, { angle: 90, arrangement: go.TreeLayout.ArrangementHorizontal }),
-            "undoManager.isEnabled": true,
+            "undoManager.isEnabled": false,
             // Model ChangedEvents get passed up to component users
             "ModelChanged": function(e) { self.$emit("model-changed", e); },
             "ChangedSelection": function(e) { self.$emit("changed-selection", e); }
