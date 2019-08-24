@@ -5,16 +5,16 @@
 			<div class="col-3">
 				<label>Input</label>
 			</div>
-			<div class="col-3">
+			<div class="col-3" v-if="NeedTarget">
 				<label>Target</label>
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="col-3">
-				<input  type="text" class="form-control" v-model="Input"/>
+				<input  type="text" class="form-control" v-model="Input" :class="{'is-valid': IsInputValid, 'is-invalid': !IsInputValid}"/>
 			</div>
-			<div class="col-3">
-				<input  type="text" class="form-control" v-model="Target"/>
+			<div class="col-3" v-if="NeedTarget">
+				<input  type="text" class="form-control" v-model="Target" :class="{'is-valid': IsTargetValid, 'is-invalid': !IsTargetValid}"/>
 			</div>
 			<div class="col-3">
 				<button type="button" class="btn btn-primary" @click="GetResult()">Get</button>
@@ -31,24 +31,26 @@
 <script>
 import ArrayDiagram from '../ArrayDiagram.vue'
 import FindTarget from '../binarySearch/FindTarget.vue'
+import FindPeak from '../binarySearch/FindPeak.vue'
 
 export default {
 	name: 'BinarySearch',
-	props: ['Tab', 'CurrentAlgorithm'],
+	props: ['Tab', 'CurrentAlgorithm', 'NeedTarget', 'NeedSort'],
 	created() {
 		this.Algorithm = this.CurrentAlgorithm;
+		this.Input = '-1,0,3,5,9,12';
+		this.Pattern = /^[-0-9.,]+$/
 	},
 	mounted() {
 		window.EventBus.$on('UpdateDiagram', this.updateDiagramFromData)
 	},
 	components: {
 		ArrayDiagram: ArrayDiagram,
-		FindTarget: FindTarget
+		FindTarget: FindTarget,
+		FindPeak: FindPeak
 	},
 	data() {
 		return {
-			Output: '',
-			Input: '-1,0,3,5,9,12',
 		}
 	},
 	methods: {
@@ -77,18 +79,30 @@ export default {
 		},
 		MapInput() {
 			var Vue = this;
-			this.diagramData.nodeDataArray = $.map(this.Input.split(','), function(value){
-				var data = {key: parseInt(value), text: value, color: "grey"};
+			var items = [];
+			if (this.NeedSort){
+				items = this.Input.split(',').sort(function(a, b){
+					return parseInt(a) - parseInt(b);
+				})
+			}
+			else {
+				items = this.Input.split(',');
+			}
+			this.diagramData.nodeDataArray = items.map(function(value, index){
+				var data = {key: index, text: value, value: parseInt(value), color: "white"};
 				Vue.AddNode(data);
 				return data;
-			});
-			this.diagramData.nodeDataArray.sort(function(a,b ){ return a.key - b.key;});
+			})
 		},
 		GetResult() {
+			if (!this.IsFormValid())
+				return alert('Form not valid');
 			this.ClearDiagram();
+			this.$refs.diag.setContentAlign(); 
 			this.MapInput();
 			setTimeout(() => {
-				this.Output = this.Execute();
+								this.updateDiagramFromData();
+				this.Execute();
 			}, 1000);
 		},
 		updateDiagramFromData() { 

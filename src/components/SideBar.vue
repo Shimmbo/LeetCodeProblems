@@ -3,6 +3,8 @@
 		<div class="sidebar-heading">LeetCode Problems</div>
 		<div class="list-group list-group-flush">
 			<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinarySearch', 'FindTarget', 'Binary Search')">Binary Search</a>
+			<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinarySearch', 'FindTarget', 'Binary Search', true, true)">Find Target</a>
+			<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinarySearch', 'FindPeak', 'Find Peak Element', false, false)">Find Peak Element</a>
 			<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('Test')">Shortcuts</a>
 			<a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
 			<a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
@@ -16,8 +18,8 @@
 export default {
 	name: 'SideBar',
   	methods: {
-		SetTabAlgorithm(tab, algorithm, name){
-			this.$emit('SetTabAlgorithm', tab, algorithm, name);
+		SetTabAlgorithm(tab, algorithm, name, needTarget, needSort){
+			this.$emit('SetTab', tab, algorithm, name, needTarget, needSort);
 		}
  	 }
 }

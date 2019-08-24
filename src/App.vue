@@ -1,11 +1,13 @@
 <template>
   <div id="app" class="d-flex">
-    <SideBar :Tab="CurrentTab" @SetTab="SetTabAlgorithm"/>
+    <SideBar :Tab="CurrentTab" @SetTab="SetComponenet"/>
     <div id="page-content-wrapper">
       <Header :Title="CurrentName"/>
-      <component :is="CurrentTab" :Tab="CurrentTab" :CurrentAlgorithm="CurrentAlgorithm">
+      <keep-alive>
+      <component :key="ComponentKey" :is="CurrentTab" :Tab="CurrentTab" :CurrentAlgorithm="CurrentAlgorithm" :NeedTarget="NeedTarget" :NeedSort="NeedSort">
 
       </component>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -26,14 +28,24 @@ export default {
     return {
       CurrentTab: 'BinarySearch',
       CurrentAlgorithm: 'FindTarget',
-      CurrentName: 'Binary Search'
+      CurrentName: 'Binary Search',
+      NeedTarget: true,
+      NeedSort: true
+    }
+  },
+  computed: {
+    ComponentKey() {
+      return this.CurrentTab + "_" + this.CurrentAlgorithm;
     }
   },
   methods: {
-    SetTabAlgorithm(tab, algorithm) {
-      this.CurrentTab = name;
+    SetComponenet(tab, algorithm, name, needTarget, needSort) {
+      this.CurrentTab = tab;
       this.CurrentAlgorithm = algorithm;
       this.CurrentName = name;
+      this.NeedTarget = needTarget;
+      this.NeedSort = needSort;
+      this.$forceUpdate();
     }
   }
 }
