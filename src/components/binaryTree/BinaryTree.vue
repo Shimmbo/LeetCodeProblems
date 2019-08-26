@@ -20,7 +20,7 @@
 				<button type="button" class="btn btn-primary" @click="GetResult()">Get</button>
 			</div>
 		</div>
-       	<label>Result is {{Output}}</label>
+       	<strong>Result is {{Output}}</strong>
        	<br/>
       
        	<br/>
@@ -79,9 +79,11 @@ export default {
 			var Vue = this;
 			var items = [];
 			items = this.Input.split(',');
-			console.log(this.Deserialize(this.Input))
+			this.Deserialize(this.Input)
         },
         Deserialize(data) {
+			this.diagramData.nodeDataArray = [];
+			this.diagramData.linkDataArray = [];
             if (data == "") return null;
             var strs = data.split(",");
             var root = {
@@ -91,8 +93,9 @@ export default {
                 color: 'white'
             };
             var q = [];
-            q.push(root);
-            this.AddNode(root);
+			q.push(root);
+			this.diagramData.nodeDataArray.push(root);
+			this.AddNode(root);
             var left = true;
             var cur = null;
             for (var i = 1; i < strs.length; ++i) {
@@ -105,7 +108,9 @@ export default {
                             key: parseInt(strs[i]),
                             text: strs[i],
                             color: 'white'
-                        };
+						};
+						this.diagramData.nodeDataArray.push(cur.left);
+						this.diagramData.linkDataArray.push({from: cur.key, to: cur.left.key})
                         this.AddNode(cur.left);
                         this.AddLinkedData({from: cur.key, to: cur.left.key});
                         q.push(cur.left);
@@ -115,14 +120,17 @@ export default {
                             key: parseInt(strs[i]),
                             text: strs[i],
                             color: 'white'
-                        }
+						}
+						this.diagramData.nodeDataArray.push(cur.right);
+						this.diagramData.linkDataArray.push({from: cur.key, to: cur.right.key})
                         this.AddNode(cur.right);
                         this.AddLinkedData({from: cur.key, to: cur.right.key});
                         q.push(cur.right);
                     }
                 }
                 left = !left;
-            }
+			}
+			this.$refs.diag.updateModel(this.Model())
             return root;
         },
 		GetResult() {
@@ -143,17 +151,6 @@ export default {
 			switch(this.CurrentAlgorithm){
 				case 'MaximumDepth':
 					this.Input = '3,9,20,null,null,15,7';
-					break;
-				case 'FindPeak':
-					this.Input = '1,2,3,1';
-					break;
-				case 'SearchRange':
-					this.Input = '5,7,7,8,8,10';
-					this.Target = '8'
-					break;
-				case 'TwoSum':
-					this.Input = '2,7,11,15';
-					this.Target = '9'
 					break;
 			}
 		}

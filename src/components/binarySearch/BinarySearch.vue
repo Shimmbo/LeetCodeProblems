@@ -20,7 +20,7 @@
 				<button type="button" class="btn btn-primary" @click="GetResult()">Get</button>
 			</div>
 		</div>
-       	<label>Result is {{Output}}</label>
+       	<strong>Result is {{Output}}</strong>
        	<br/>
       
        	<br/>
@@ -105,7 +105,7 @@ export default {
 			this.$refs.diag.setContentAlign(); 
 			this.MapInput();
 			setTimeout(() => {
-								this.updateDiagramFromData();
+				this.updateDiagramFromData();
 				this.Execute();
 			}, 1000);
 		},

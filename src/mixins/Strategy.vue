@@ -11,7 +11,8 @@ export default {
 			Target: 0,
 			Output: '',
 			Input: '',
-			Pattern: ''
+			Pattern: '',
+			Time: 1
 		}
 	},
 	computed: {
@@ -24,7 +25,7 @@ export default {
 	},
 	methods: {
 		Execute() {
-			return this[this.Algorithm](this.diagramData, this.Target);
+			return this[this.Algorithm]()
 		},
 		IsFormValid(){
 			return this.IsInputValid && this.IsTargetValid;
@@ -42,10 +43,10 @@ export default {
 			}, time * 1000);
 		},
 		FindTarget() {
-			var time = 1;
+			this.Time = 1;
 			var index = parseInt(this.diagramData.nodeDataArray.length / 2);
 			var middle = this.diagramData.nodeDataArray[index].value;
-			this.ChangeColor(this.diagramData.nodeDataArray[index].key, time++, "red");
+			this.ChangeColor(this.diagramData.nodeDataArray[index].key, this.Time++, "red");
 			var from = 0;
 			var to = index;
 			if (this.Target >= middle){
@@ -54,7 +55,7 @@ export default {
 			}
 			for(var i = from; i < to; i++)
 			{
-				this.ChangeColor(this.diagramData.nodeDataArray[i].key, time++, "red");
+				this.ChangeColor(this.diagramData.nodeDataArray[i].key, this.Time++, "red");
 				if (this.diagramData.nodeDataArray[i].value == this.Target) {
 					this.Output = i;
 					return;
@@ -63,23 +64,23 @@ export default {
 			return this.Output = "Not Found";	
 		},
 		FindPeak() {
-			var time = 1;
+			this.Time = 1;
 			var left = 0;
 			var right = this.diagramData.nodeDataArray.length - 1;
 			while (left < right){
 				var mid = parseInt((left + (right - left) / 2));
-				this.ChangeColor(this.diagramData.nodeDataArray[mid].key, time, "red")
-				this.ChangeColor(this.diagramData.nodeDataArray[mid + 1].key, time++, "yellow")
+				this.ChangeColor(this.diagramData.nodeDataArray[mid].key, this.Time, "red")
+				this.ChangeColor(this.diagramData.nodeDataArray[mid + 1].key, this.Time++, "red")
 				if (this.diagramData.nodeDataArray[mid].value < this.diagramData.nodeDataArray[mid + 1].value)
 					left = mid + 1;
 				else 
 					right = mid;
 			}
-			this.ChangeColor(this.diagramData.nodeDataArray[left].key, time, "red")
+			this.ChangeColor(this.diagramData.nodeDataArray[left].key, this.Time, "red")
 			this.Output = left;
 		},
 		SearchRange() {
-			var time = 1;
+			this.Time = 1;
 			var left = 0;
 			var right = this.diagramData.nodeDataArray.length - 1;
 			var found=false;
@@ -87,7 +88,7 @@ export default {
 			var result = [-1,-1];
 			while( left <= right){
 				var mid = parseInt((left + (right - left) / 2));
-				this.ChangeColor(this.diagramData.nodeDataArray[mid].key, time++, "red")
+				this.ChangeColor(this.diagramData.nodeDataArray[mid].key, this.Time++, "red")
 				if(this.diagramData.nodeDataArray[mid].value > this.Target)
 					right = mid - 1;
 				else if(this.diagramData.nodeDataArray[mid].value < this.Target)
@@ -105,7 +106,7 @@ export default {
 				right = this.diagramData.nodeDataArray.length - 1;
 				while(left < right - 1){
 					var mid = parseInt((left + (right - left) / 2));
-					this.ChangeColor(this.diagramData.nodeDataArray[mid].key, time++, "red")
+					this.ChangeColor(this.diagramData.nodeDataArray[mid].key, this.Time++, "red")
 					if(this.diagramData.nodeDataArray[mid].value == this.Target){
 						result[1] = mid;
 						left = mid;
@@ -122,7 +123,7 @@ export default {
 				left = 0;
 				while(left < right - 1){
 					var mid = parseInt((left + (right - left) / 2));
-					this.ChangeColor(this.diagramData.nodeDataArray[mid].key, time++, "red")
+					this.ChangeColor(this.diagramData.nodeDataArray[mid].key, this.Time++, "red")
 					if(this.diagramData.nodeDataArray[mid].value == this.Target){
 						result [0] = mid;
 						right = mid;
@@ -139,15 +140,15 @@ export default {
 			this.Output = result;
 		},
 		TwoSum() {
-			var time = 1;
+			this.Time = 1;
 			var n = this.diagramData.nodeDataArray.length;
 			var left = 0;
 			var right = n - 1;
 
 			while (left < right) {
 				var result = this.diagramData.nodeDataArray[left].value + this.diagramData.nodeDataArray[right].value;
-				this.ChangeColor(this.diagramData.nodeDataArray[left].key, time, "red")
-				this.ChangeColor(this.diagramData.nodeDataArray[right].key, time++, "yellow")
+				this.ChangeColor(this.diagramData.nodeDataArray[left].key, this.Time, "red")
+				this.ChangeColor(this.diagramData.nodeDataArray[right].key, this.Time++, "red")
 				if (result == this.Target) {
 					this.Output = [left + 1, right + 1 ];
 					return;
@@ -158,6 +159,19 @@ export default {
 				}
 			}
 			return this.Output = 'Sum not found';
+		},
+		MaximumDepth(){
+			this.Time = 1;
+			this.Output = this.MaximumDepthHelper(this.diagramData.nodeDataArray[0]);
+		},
+		MaximumDepthHelper(root) {
+			if (root == null) {
+		    	return 0;                                
+			}
+			this.ChangeColor(root.key, this.Time++, "red")
+			var left = this.MaximumDepthHelper(root.left);
+			var right = this.MaximumDepthHelper(root.right);
+			return Math.max(left, right) + 1;
 		}
 	}
 }
