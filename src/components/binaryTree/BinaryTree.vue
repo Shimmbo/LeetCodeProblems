@@ -30,28 +30,22 @@
 
 <script>
 import ArrayDiagram from '../ArrayDiagram.vue'
-import FindTarget from '../binarySearch/FindTarget.vue'
-import FindPeak from '../binarySearch/FindPeak.vue'
-import SearchRange from '../binarySearch/SearchRange.vue'
-import TwoSum from '../binarySearch/TwoSum.vue'
+import MaximumDepth from '../binaryTree/MaximumDepth.vue'
 
 export default {
-	name: 'BinarySearch',
+	name: 'BinaryTree',
 	props: ['Tab', 'CurrentAlgorithm', 'NeedTarget', 'NeedSort'],
 	created() {
 		this.Algorithm = this.CurrentAlgorithm;
 		this.SetInputDefaults();
-		this.Pattern = /^[-0-9.,]+$/
+		this.Pattern = /^[-0-9null.,]+$/
 	},
 	mounted() {
 		window.EventBus.$on('UpdateDiagram', this.updateDiagramFromData)
 	},
 	components: {
-		ArrayDiagram: ArrayDiagram,
-		FindTarget: FindTarget,
-		FindPeak: FindPeak,
-		SearchRange: SearchRange,
-		TwoSum: TwoSum
+        ArrayDiagram: ArrayDiagram,
+        MaximumDepth: MaximumDepth
 	},
 	data() {
 		return {
@@ -84,20 +78,53 @@ export default {
 		MapInput() {
 			var Vue = this;
 			var items = [];
-			if (this.NeedSort){
-				items = this.Input.split(',').sort(function(a, b){
-					return parseInt(a) - parseInt(b);
-				})
-			}
-			else {
-				items = this.Input.split(',');
-			}
-			this.diagramData.nodeDataArray = items.map(function(value, index){
-				var data = {key: index, text: value, value: parseInt(value), color: "white"};
-				Vue.AddNode(data);
-				return data;
-			})
-		},
+			items = this.Input.split(',');
+			console.log(this.Deserialize(this.Input))
+        },
+        Deserialize(data) {
+            if (data == "") return null;
+            var strs = data.split(",");
+            var root = {
+                value: parseInt(strs[0]),
+                key: parseInt(strs[0]),
+                text: strs[0],
+                color: 'white'
+            };
+            var q = [];
+            q.push(root);
+            this.AddNode(root);
+            var left = true;
+            var cur = null;
+            for (var i = 1; i < strs.length; ++i) {
+                if (left)
+                    cur = q.shift();
+                if (strs[i] != "null") {
+                    if (left) {
+                        cur.left = {
+                            value: parseInt(strs[i]),
+                            key: parseInt(strs[i]),
+                            text: strs[i],
+                            color: 'white'
+                        };
+                        this.AddNode(cur.left);
+                        this.AddLinkedData({from: cur.key, to: cur.left.key});
+                        q.push(cur.left);
+                    } else {
+                        cur.right = {
+                            value: parseInt(strs[i]),
+                            key: parseInt(strs[i]),
+                            text: strs[i],
+                            color: 'white'
+                        }
+                        this.AddNode(cur.right);
+                        this.AddLinkedData({from: cur.key, to: cur.right.key});
+                        q.push(cur.right);
+                    }
+                }
+                left = !left;
+            }
+            return root;
+        },
 		GetResult() {
 			if (!this.IsFormValid())
 				return alert('Form not valid');
@@ -105,7 +132,7 @@ export default {
 			this.$refs.diag.setContentAlign(); 
 			this.MapInput();
 			setTimeout(() => {
-								this.updateDiagramFromData();
+                this.updateDiagramFromData();
 				this.Execute();
 			}, 1000);
 		},
@@ -114,9 +141,8 @@ export default {
 		},
 		SetInputDefaults() {
 			switch(this.CurrentAlgorithm){
-				case 'FindTarget':
-					this.Input = '-1,0,3,5,9,12';
-					this.Target = '9'
+				case 'MaximumDepth':
+					this.Input = '3,9,20,null,null,15,7';
 					break;
 				case 'FindPeak':
 					this.Input = '1,2,3,1';

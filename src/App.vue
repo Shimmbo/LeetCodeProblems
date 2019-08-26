@@ -16,13 +16,15 @@
 import SideBar from './components/SideBar.vue'
 import Header from './components/Header.vue'
 import BinarySearch from './components/binarySearch/BinarySearch.vue'
+import BinaryTree from './components/binaryTree/BinaryTree.vue'
 
 export default {
   name: 'app',
   components: {
     SideBar,
     Header,
-    BinarySearch
+    BinarySearch,
+    BinaryTree
   },
   data(){
     return {
@@ -95,5 +97,36 @@ body {
   #app.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.sidenav a:hover, .dropdown-btn:hover {
+  background-color: #dae0e5!important;
+}
+
+.active {
+  background-color: #dae0e5;
+}
+
+.dropdown-container {
+  display: none;
+  padding-left: 8px;
+}
+.drop-active{
+  display: block;
 }
 </style>
