@@ -11,10 +11,10 @@
 			</div>
 			<button class="dropdown-btn" @click="OpenDropDown">Binary Tree</button>
 			<div class="dropdown-container">
+				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'PreOrder', 'Binary Tree Preorder Traversal', false, false)">Preorder Traversal</a>
+				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'InOrder', 'Binary Tree Inorder Traversal', false, false)">Inorder Traversal</a>
 				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'MaximumDepth', 'Maximum Depth of Binary Tree', false, false)">Maximum Depth</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinarySearch', 'FindPeak', 'Find Peak Element', false, false)">Find Peak Element</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinarySearch', 'SearchRange', 'Search for a Range', true, true)">Search for a Range</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinarySearch', 'TwoSum', 'Two Sum', true, true)">Two Sum</a>
+				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'PathSum', 'Path Sum', true, false)">Path Sum</a>
 			</div>
 		</div>
 	</div>

@@ -31,6 +31,9 @@
 <script>
 import ArrayDiagram from '../ArrayDiagram.vue'
 import MaximumDepth from '../binaryTree/MaximumDepth.vue'
+import PathSum from '../binaryTree/PathSum.vue'
+import PreOrder from '../binaryTree/PreOrder.vue'
+import InOrder from '../binaryTree/InOrder.vue'
 
 export default {
 	name: 'BinaryTree',
@@ -45,7 +48,10 @@ export default {
 	},
 	components: {
         ArrayDiagram: ArrayDiagram,
-        MaximumDepth: MaximumDepth
+		MaximumDepth: MaximumDepth,
+		PathSum: PathSum,
+		PreOrder: PreOrder,
+		InOrder: InOrder
 	},
 	data() {
 		return {
@@ -77,8 +83,6 @@ export default {
 		},
 		MapInput() {
 			var Vue = this;
-			var items = [];
-			items = this.Input.split(',');
 			this.Deserialize(this.Input)
         },
         Deserialize(data) {
@@ -138,6 +142,7 @@ export default {
 				return alert('Form not valid');
 			this.ClearDiagram();
 			this.$refs.diag.setContentAlign(); 
+			this.$refs.diag.diagram.div.style.height = "400px";
 			this.MapInput();
 			setTimeout(() => {
                 this.updateDiagramFromData();
@@ -151,6 +156,13 @@ export default {
 			switch(this.CurrentAlgorithm){
 				case 'MaximumDepth':
 					this.Input = '3,9,20,null,null,15,7';
+					break;
+				case 'PathSum':
+					this.Input = '5,4,8,11,null,13,4,7,2,null,null,null,1';
+					break;
+				case 'PreOrder':
+				case 'InOrder':
+					this.Input = '1,null,2,3';
 					break;
 			}
 		}

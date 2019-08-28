@@ -168,10 +168,60 @@ export default {
 			if (root == null) {
 		    	return 0;                                
 			}
-			this.ChangeColor(root.key, this.Time++, "red")
+			this.ChangeColor(root.key, this.Time++, "red");
 			var left = this.MaximumDepthHelper(root.left);
-			var right = this.MaximumDepthHelper(root.right);
+			var right = this.MaximumDepthHelper(root.right);	
 			return Math.max(left, right) + 1;
+		},	
+		PathSum() {
+			this.Time = 1;
+			this.Output = this.PathSumHelper(this.diagramData.nodeDataArray[0], this.Target);
+		},
+		PathSumHelper(root, sum) {
+			if (root == null)
+				return false;
+
+			this.ChangeColor(root.key, this.Time++, "red");
+			sum -= root.value;
+			if (sum < 0)
+				this.ChangeColor(root.key, this.Time++, "white");
+			if (root.left == null && root.right == null && sum == 0)
+				return true;
+			
+			if (root.left != null && this.PathSumHelper(root.left, sum))
+				return true;
+			
+			if (root.right != null && this.PathSumHelper(root.right, sum))
+				return true;
+			
+			return false;
+		},
+		PreOrder() {
+			this.Time = 1;
+			this.Output = [];
+			this.PreOrderHelper(this.diagramData.nodeDataArray[0]);
+
+		},
+		PreOrderHelper(root) {
+			if(root != null){
+				this.Output.push(root.value);
+				this.ChangeColor(root.key, this.Time++, "red");
+				this.PreOrderHelper(root.left);
+				this.PreOrderHelper(root.right);
+			}
+		},
+		InOrder() {
+			this.Time = 1;
+			this.Output = [];
+			this.InOrderHelper(this.diagramData.nodeDataArray[0]);
+		},
+		InOrderHelper(root) {
+			if(root != null) {
+				this.InOrderHelper(root.left);
+				this.Output.push(root.value);
+				this.ChangeColor(root.key, this.Time++, "red");
+				this.InOrderHelper(root.right);
+			}
 		}
 	}
 }

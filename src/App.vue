@@ -114,6 +114,10 @@ body {
   outline: none;
 }
 
+.sidenav .dropdown-btn {
+  background-color: #dae0e5 !important;
+}
+
 .sidenav a:hover, .dropdown-btn:hover {
   background-color: #dae0e5!important;
 }
