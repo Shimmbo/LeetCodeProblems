@@ -16,6 +16,11 @@
 				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'MaximumDepth', 'Maximum Depth of Binary Tree', false, false)">Maximum Depth</a>
 				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'PathSum', 'Path Sum', true, false)">Path Sum</a>
 			</div>
+			<button class="dropdown-btn" @click="OpenDropDown">Binary Search Tree</button>
+			<div class="dropdown-container">
+				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'ValidTree', 'Validate Binary Search Tree', false, false)">Validate Tree</a>
+				<a href="#" class="list-group-item list-group-item-action bg-light" @click="SetTabAlgorithm('BinaryTree', 'SearchValue', 'Search in a Binary Search Tree', true, false)">Search In Tree</a>
+			</div>
 		</div>
 	</div>
 </template>

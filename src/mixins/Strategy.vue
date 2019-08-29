@@ -1,5 +1,4 @@
 <script>
-import { isNumber } from 'util';
 export default {
 	data () {
 		return {
@@ -222,6 +221,46 @@ export default {
 				this.ChangeColor(root.key, this.Time++, "red");
 				this.InOrderHelper(root.right);
 			}
+		},
+		ValidTree() {
+			this.Time = 1;
+			this.Output = this.ValidTreeHelper(this.diagramData.nodeDataArray[0], -Infinity, Infinity);
+		},
+		ValidTreeHelper(root, min, max) {
+			if (root == null) return true;
+			this.ChangeColor(root.key, this.Time++, "red");
+			if (min < root.value && root.value < max) {
+				var leftResult = this.ValidTreeHelper(root.left, min, root.value);
+				var rightResult = this.ValidTreeHelper(root.right, root.value, max);
+
+				return leftResult && rightResult;
+			}
+
+        	return false;
+		},
+		SearchValue() {
+			this.Time = 1;
+			this.Output = [];
+			this.SearchValueMapper(this.SearchValueHelper(this.diagramData.nodeDataArray[0]));
+		},
+		SearchValueMapper(root) {
+			if (root == null) return null;
+			this.Output.push(root.value);
+			this.SearchValueMapper(root.left);
+			this.SearchValueMapper(root.right);
+		},
+		SearchValueHelper(root) {
+			if (root == null)
+				return null;
+				
+			this.ChangeColor(root.key, this.Time++, "red");
+
+			if (root.value == this.Target)
+				return root;
+			else if (root.value < this.Target)
+				return this.SearchValueHelper(root.right);
+			else
+				return this.SearchValueHelper(root.left);
 		}
 	}
 }

@@ -34,6 +34,8 @@ import MaximumDepth from '../binaryTree/MaximumDepth.vue'
 import PathSum from '../binaryTree/PathSum.vue'
 import PreOrder from '../binaryTree/PreOrder.vue'
 import InOrder from '../binaryTree/InOrder.vue'
+import ValidTree from '../binaryTree/ValidTree.vue'
+import SearchValue from '../binaryTree/SearchValue.vue'
 
 export default {
 	name: 'BinaryTree',
@@ -51,7 +53,9 @@ export default {
 		MaximumDepth: MaximumDepth,
 		PathSum: PathSum,
 		PreOrder: PreOrder,
-		InOrder: InOrder
+		InOrder: InOrder,
+		ValidTree: ValidTree,
+		SearchValue: SearchValue
 	},
 	data() {
 		return {
@@ -163,6 +167,13 @@ export default {
 				case 'PreOrder':
 				case 'InOrder':
 					this.Input = '1,null,2,3';
+					break;
+				case 'ValidTree':
+					this.Input = '2,1,3'
+					break;
+				case 'SearchValue':
+					this.Input = '4,2,7,1,3';
+					this.Target = 2;
 					break;
 			}
 		}
